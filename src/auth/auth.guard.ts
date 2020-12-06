@@ -37,11 +37,11 @@ export class AuthGuard implements CanActivate {
             throw new UnauthorizedError();
         }
 
-        if (payload.id) {
+        if (!payload || !payload.id) {
+            throw new UnauthorizedError();
+        } else {
             ctx.getContext().user = payload;
             return true;
-        } else {
-            throw new UnauthorizedError();
         }
     }
 }
