@@ -28,18 +28,19 @@ export class AuthGuard implements CanActivate {
         if (!authorization) {
             throw new UnauthorizedError();
         }
+        let payload;
 
         try {
             const token = authorization.split(' ')[1];
-            const payload = await this.authService.authenticate(token);
-            if (payload.id) {
-                ctx.getContext().user = payload;
-                return true;
-            } else {
-                return false;
-            }
-
+            payload = await this.authService.authenticate(token);
         } catch (err) {
+            throw new UnauthorizedError();
+        }
+
+        if (payload.id) {
+            ctx.getContext().user = payload;
+            return true;
+        } else {
             throw new UnauthorizedError();
         }
     }

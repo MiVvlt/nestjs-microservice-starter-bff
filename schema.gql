@@ -20,6 +20,7 @@ type Query {
   login(credentials: ILoginRequestDto!): ILoginResponseDto!
   authenticate(accessToken: String!): IAuthenticateResponseDto!
   refreshAccessToken(refreshToken: String!): String!
+  bye: String!
 }
 
 input ILoginRequestDto {

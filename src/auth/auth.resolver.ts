@@ -20,7 +20,7 @@ export class AuthResolver {
         @Context() context: ReqResContext): Promise<ILoginResponseDto> {
 
         const tokens = await this.authService.login(credentials);
-        context.res.cookie('srt', tokens.refreshToken, {httpOnly: true});
+        context.res.cookie('srt', tokens.refreshToken, {httpOnly: true, secure: true});
         return {accessToken: tokens.accessToken};
     }
 
@@ -45,6 +45,11 @@ export class AuthResolver {
         @Args('dto', {type: () => IRegisterRequestDto}) dto: IRegisterRequestDto
     ): Promise<IRegisterResponseDto> {
         return await this.authService.register(dto);
+    }
+
+    @Query(() => String)
+    async bye(): Promise<string> {
+        return 'bye';
     }
 
 }
