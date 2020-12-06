@@ -1,0 +1,39 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type ILoginResponseDto {
+  accessToken: String!
+}
+
+type IRegisterResponseDto {
+  id: String!
+}
+
+type IAuthenticateResponseDto {
+  id: String!
+  roles: [String!]!
+  email: String!
+}
+
+type Query {
+  login(credentials: ILoginRequestDto!): ILoginResponseDto!
+  authenticate(accessToken: String!): IAuthenticateResponseDto!
+  refreshAccessToken(refreshToken: String!): String!
+}
+
+input ILoginRequestDto {
+  email: String!
+  password: String!
+}
+
+type Mutation {
+  register(dto: IRegisterRequestDto!): IRegisterResponseDto!
+}
+
+input IRegisterRequestDto {
+  email: String!
+  password: String!
+  firstname: String!
+  lastname: String!
+}
