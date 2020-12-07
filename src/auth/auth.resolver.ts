@@ -1,8 +1,15 @@
 import {Args, Query, Mutation, Resolver, Context} from '@nestjs/graphql';
 import {AuthService} from './auth.service';
 import {Logger} from '@nestjs/common';
-import {ILoginResponseDto, ILoginRequestDto, IRegisterResponseDto, IRegisterRequestDto, IAuthenticateResponseDto} from './dto/auth.dto';
-import {ReqResContext} from './ReqResContext';
+import {
+    ILoginResponseDto,
+    ILoginRequestDto,
+    IRegisterResponseDto,
+    IRegisterRequestDto,
+    IAuthenticateResponseDto,
+    IMeResponseDto
+} from './dto/auth.dto';
+import {AuthContext} from './AuthContext';
 import {Public} from './decorators/is-public.decorator';
 
 @Resolver()
@@ -17,7 +24,7 @@ export class AuthResolver {
     @Query(() => ILoginResponseDto)
     async login(
         @Args('credentials', {type: () => ILoginRequestDto}) credentials: ILoginRequestDto,
-        @Context() context: ReqResContext): Promise<ILoginResponseDto> {
+        @Context() context: AuthContext): Promise<ILoginResponseDto> {
 
         const tokens = await this.authService.login(credentials);
         context.res.cookie('srt', tokens.refreshToken, {httpOnly: true, secure: true});
@@ -47,9 +54,9 @@ export class AuthResolver {
         return await this.authService.register(dto);
     }
 
-    @Query(() => String)
-    async bye(): Promise<string> {
-        return 'bye';
+    @Query(() => IMeResponseDto)
+    async me(@Context(){token}: AuthContext): Promise<IMeResponseDto> {
+        return this.authService.me(token);
     }
 
 }

@@ -16,11 +16,20 @@ type IAuthenticateResponseDto {
   email: String!
 }
 
+type IMeResponseDto {
+  id: String!
+  firstname: String
+  lastname: String
+  created: String!
+  roles: [String!]!
+  email: String!
+}
+
 type Query {
   login(credentials: ILoginRequestDto!): ILoginResponseDto!
   authenticate(accessToken: String!): IAuthenticateResponseDto!
   refreshAccessToken(refreshToken: String!): String!
-  bye: String!
+  me: IMeResponseDto!
 }
 
 input ILoginRequestDto {

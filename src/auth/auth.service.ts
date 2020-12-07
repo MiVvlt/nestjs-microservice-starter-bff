@@ -2,7 +2,7 @@ import {Injectable, Logger} from '@nestjs/common';
 import {
     IAuthenticateResponseDto,
     ILoginRequestDto,
-    ILoginTokens,
+    ILoginTokens, IMeResponseDto,
     IRegisterRequestDto,
     IRegisterResponseDto
 } from './dto/auth.dto';
@@ -36,6 +36,10 @@ export class AuthService {
     async refreshAccessToken(refreshToken: string): Promise<string> {
 
         return await this.client.send<string, string>('refreshAccessToken', refreshToken).toPromise();
+    }
+
+    async me(accessToken: string): Promise<IMeResponseDto> {
+        return await this.client.send<IMeResponseDto, string>('me', accessToken).toPromise();
     }
 
     register(dto: IRegisterRequestDto): Promise<IRegisterResponseDto> {

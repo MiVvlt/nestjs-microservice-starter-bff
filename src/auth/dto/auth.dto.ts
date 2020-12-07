@@ -65,3 +65,26 @@ export class IAuthenticateResponseDto {
     email: string;
 }
 
+// ME
+
+@ObjectType()
+export class IMeResponseDto {
+    @Field(() => String)
+    id: string;
+
+    @Field(() => String, {nullable: true})
+    firstname: string;
+
+    @Field(() => String, {nullable: true})
+    lastname: string;
+
+    @Field(() => String)
+    created: string;
+
+    @Field(() => [String])
+    roles: string[];
+
+    @Field(() => String)
+    email: string;
+}
+
