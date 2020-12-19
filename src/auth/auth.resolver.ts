@@ -27,7 +27,7 @@ export class AuthResolver {
         @Context() context: AuthContext): Promise<ILoginResponseDto> {
 
         const tokens = await this.authService.login(credentials);
-        context.res.cookie('srt', tokens.refreshToken, {httpOnly: true, secure: true});
+        context.res.cookie('srt', tokens.refreshToken, {httpOnly: true, secure: true, path: '/'});
         return {accessToken: tokens.accessToken};
     }
 

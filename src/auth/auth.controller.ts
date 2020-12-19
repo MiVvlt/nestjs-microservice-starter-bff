@@ -1,4 +1,4 @@
-import {Controller, HttpException, HttpStatus, Post, Req} from '@nestjs/common';
+import {Controller, Get, HttpException, HttpStatus, Post, Req, Res} from '@nestjs/common';
 import {AuthService} from './auth.service';
 import {Request} from 'express';
 import {Public} from './decorators/is-public.decorator';
@@ -17,5 +17,12 @@ export class AuthController {
             throw new HttpException('No cookie available', HttpStatus.UNAUTHORIZED);
         }
         return {accessToken: await this.authService.refreshAccessToken(token)};
+    }
+
+    @Public()
+    @Get('logout')
+    async logout(@Res() res) {
+        res.clearCookie('srt', {httpOnly: true, secure: true, path: '/'})
+        return res.send();
     }
 }

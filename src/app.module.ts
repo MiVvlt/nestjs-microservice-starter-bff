@@ -10,6 +10,10 @@ import {APP_GUARD} from '@nestjs/core';
     imports: [
         GraphQLModule.forRoot({
             autoSchemaFile: 'schema.gql',
+            cors: {
+                origin: 'http://localhost:4200',
+                credentials: true
+            },
             context: ({req, res}) => ({req, res})
         }),
         AuthModule
