@@ -1,6 +1,8 @@
 import {Args, Query, Mutation, Resolver, Context} from '@nestjs/graphql';
 import {AuthService} from './auth.service';
 import {Logger} from '@nestjs/common';
+import * as jwtDecode from "jwt-decode";
+
 import {
     ILoginResponseDto,
     ILoginRequestDto,
@@ -26,8 +28,21 @@ export class AuthResolver {
         @Args('credentials', {type: () => ILoginRequestDto}) credentials: ILoginRequestDto,
         @Context() context: AuthContext): Promise<ILoginResponseDto> {
 
+        // get access and refresh tokens
         const tokens = await this.authService.login(credentials);
-        context.res.cookie('srt', tokens.refreshToken, {httpOnly: true, secure: true, path: '/'});
+
+        // cookie expires when token expires
+        const expiration = (jwtDecode.default(tokens.refreshToken) as { exp: string }).exp + '000';
+
+        // set response cookie
+        context.res.cookie('srt', tokens.refreshToken, {
+            httpOnly: true,
+            secure: true,
+            path: '/',
+            expires: new Date(parseInt(expiration))
+        });
+
+        // return accessToken for clients to store
         return {accessToken: tokens.accessToken};
     }
 

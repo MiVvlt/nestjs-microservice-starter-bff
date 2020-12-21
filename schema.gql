@@ -20,7 +20,7 @@ type IMeResponseDto {
   id: String!
   firstname: String
   lastname: String
-  created: String!
+  dateCreated: String!
   roles: [String!]!
   email: String!
 }

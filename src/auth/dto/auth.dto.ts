@@ -79,7 +79,7 @@ export class IMeResponseDto {
     lastname: string;
 
     @Field(() => String)
-    created: string;
+    dateCreated: string;
 
     @Field(() => [String])
     roles: string[];
