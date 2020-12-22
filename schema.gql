@@ -20,6 +20,7 @@ type IMeResponseDto {
   id: String!
   firstname: String
   lastname: String
+  bio: String
   avatar: String
   dateCreated: String!
   roles: [String!]!
@@ -41,6 +42,8 @@ input ILoginRequestDto {
 type Mutation {
   updateAvatar(avatarRequest: IUploadAvatarRequestDto!): String!
   register(dto: IRegisterRequestDto!): IRegisterResponseDto!
+  updatePassword(dto: IUpdatePasswordRequestDto!): String!
+  updateProfile(updateInfoRequest: IUpdateProfileRequestDto!): IMeResponseDto!
 }
 
 input IUploadAvatarRequestDto {
@@ -52,4 +55,16 @@ input IRegisterRequestDto {
   password: String!
   firstname: String!
   lastname: String!
+}
+
+input IUpdatePasswordRequestDto {
+  old: String!
+  new: String!
+}
+
+input IUpdateProfileRequestDto {
+  firstname: String
+  lastname: String
+  bio: String
+  email: String!
 }

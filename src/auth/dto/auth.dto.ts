@@ -66,6 +66,8 @@ export class IMeResponseDto {
 
 	@Field( () => String, { nullable: true } ) lastname: string;
 
+	@Field( () => String, { nullable: true } ) bio: string;
+
 	@Field( () => String, { nullable: true } ) avatar: string;
 
 	@Field( () => String ) dateCreated: string;
@@ -87,5 +89,40 @@ export class IUploadAvatarRequest {
 	avatar: string;
 }
 
+
+// UPDATE PASSWORD
+@InputType()
+export class IUpdatePasswordRequestDto {
+	@Field( () => String ) old: string;
+	@Field( () => String ) new: string;
+}
+
+export class IUpdatePasswordRequest {
+	old: string;
+	new: string;
+	id: string;
+}
+
+// UPDATE PROFILE
+@InputType()
+export class IUpdateProfileRequestDto {
+
+	@Field( () => String, { nullable: true } ) firstname: string;
+
+	@Field( () => String, { nullable: true } ) lastname: string;
+
+	@Field( () => String, { nullable: true } ) bio: string;
+
+	@Field( () => String ) email: string;
+
+}
+
+export class IUpdateProfileRequest {
+	id: string;
+	firstname: string;
+	lastname: string;
+	bio: string;
+	email: string;
+}
 
 

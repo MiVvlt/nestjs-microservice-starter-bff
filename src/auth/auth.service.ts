@@ -9,6 +9,8 @@ import {
 	IMeResponseDto,
 	IRegisterRequestDto,
 	IRegisterResponseDto,
+	IUpdatePasswordRequest,
+	IUpdateProfileRequest,
 	IUploadAvatarRequest,
 } from './dto/auth.dto';
 import {
@@ -56,5 +58,13 @@ export class AuthService {
 
 	register( dto: IRegisterRequestDto ): Promise<IRegisterResponseDto> {
 		return this.client.send<IRegisterResponseDto, IRegisterRequestDto>( 'register', dto ).toPromise();
+	}
+
+	updatePassword( dto: IUpdatePasswordRequest ): Promise<string> {
+		return this.client.send<string, IUpdatePasswordRequest>( 'updatePassword', dto ).toPromise();
+	}
+
+	updateProfile( dto: IUpdateProfileRequest ): Promise<IMeResponseDto> {
+		return this.client.send<IMeResponseDto, IUpdateProfileRequest>( 'updateProfile', dto ).toPromise();
 	}
 }

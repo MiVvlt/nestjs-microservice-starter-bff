@@ -18,6 +18,8 @@ import {
 	IMeResponseDto,
 	IUploadAvatarRequestDto,
 	IUploadAvatarRequest,
+	IUpdatePasswordRequestDto,
+	IUpdateProfileRequestDto,
 } from './dto/auth.dto';
 import { AuthContext } from './AuthContext';
 import { Public } from './decorators/is-public.decorator';
@@ -84,9 +86,31 @@ export class AuthResolver {
 		return await this.authService.register( dto );
 	}
 
+	@Mutation( () => String )
+	async updatePassword( @Context(){ user }: AuthContext,
+	                      @Args( 'dto', { type: () => IUpdatePasswordRequestDto } ) dto: IUpdatePasswordRequestDto,
+	): Promise<string> {
+		return await this.authService.updatePassword( {
+			                                              ...dto,
+			                                              id: user.id,
+		                                              } );
+	}
+
 	@Query( () => IMeResponseDto )
 	async me( @Context(){ token }: AuthContext ): Promise<IMeResponseDto> {
 		return this.authService.me( token );
 	}
 
+
+	@Mutation( () => IMeResponseDto )
+	async updateProfile( @Context(){ user }: AuthContext,
+	                     @Args( 'updateInfoRequest',
+	                            { type: () => IUpdateProfileRequestDto },
+	                     ) dto: IUpdateProfileRequestDto,
+	): Promise<IMeResponseDto> {
+		return await this.authService.updateProfile( {
+			                                             ...dto,
+			                                             id: user.id,
+		                                             } );
+	}
 }
